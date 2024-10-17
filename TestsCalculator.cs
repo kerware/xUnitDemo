@@ -7,7 +7,7 @@ using Xunit.Sdk;
 
 namespace xUnitDemo
 {
-    public class MonBeforeAfterTestAttribute : BeforeAfterTestAttribute
+    public class MyBeforeAfterTestAttribute : BeforeAfterTestAttribute
     {
         
         public override void Before(MethodInfo methodUnderTest)
@@ -45,7 +45,6 @@ namespace xUnitDemo
     public class TestsCalculator : IClassFixture<BeforeAllFixture>{
 
         private readonly BeforeAllFixture _fixture;
-
 
         public TestsCalculator( BeforeAllFixture fixture )
         {
@@ -90,7 +89,7 @@ namespace xUnitDemo
 
         [Theory]
         [MemberData(nameof(GetDataFromCsv))]
-        [MonBeforeAfterTest]
+        [MyBeforeAfterTest]
         public void TestCalculatorAddWithExternalData(double x, double y, double expectedRes)
         {
             // Arrange
@@ -156,7 +155,8 @@ namespace xUnitDemo
         public void ShouldStubAndSpyARealInstance()
         {
             // Arrange
-            // On mock une Interface et on programme le mock
+            // On mock une classe et on programme le mock tout en faisant
+            // des appels sur une vraie instance : CallBase = true
             var mockCalculator = new Mock<Calculator> { CallBase = true };
             
             mockCalculator.Setup(calc => calc.add(0.0, 4.0)).Returns(3.0);
